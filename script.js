@@ -143,16 +143,21 @@ window.addEventListener('load', () => {
 
 // Active Nav Highlighting
 const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-link');
 window.addEventListener('scroll', () => {
     const scrollY = window.pageYOffset;
     sections.forEach(current => {
         const sectionHeight = current.offsetHeight;
         const sectionTop = current.offsetTop - 150;
         const sectionId = current.getAttribute('id');
+        const activeLink = Array.from(navItems).find(link => {
+            const href = link.getAttribute('href') || '';
+            return href.includes(`#${sectionId}`) || href.includes(sectionId);
+        });
         if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            document.querySelector('.nav-link[href*=' + sectionId + ']')?.classList.add('active');
+            activeLink?.classList.add('active');
         } else {
-            document.querySelector('.nav-link[href*=' + sectionId + ']')?.classList.remove('active');
+            activeLink?.classList.remove('active');
         }
     });
 });
