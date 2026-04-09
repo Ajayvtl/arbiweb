@@ -31,6 +31,35 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Mobile Nav Toggle
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+if (menuToggle && navLinks) {
+    const closeMenu = () => {
+        navLinks.classList.remove('nav-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    menuToggle.setAttribute('aria-label', 'Toggle navigation menu');
+    menuToggle.setAttribute('aria-expanded', 'false');
+
+    menuToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('nav-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 991) {
+            closeMenu();
+        }
+    });
+}
+
 // Ticker Loop Logic
 const ticker = document.querySelector('.ticker');
 if (ticker) {
